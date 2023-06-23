@@ -1,0 +1,3 @@
+[submodule "3MM_Installer/extlibs/11Zip"]
+	path = 3MM_Installer/extlibs/11Zip
+	url = https://github.com/Sygmei/11Zip.git
