@@ -20,13 +20,13 @@ bool DirectoryContainsFile(const TCHAR* directoryPath)
     return false;
 }
 
-
 void RemoveMelonLoader(std::filesystem::path path) {
     try {
         std::filesystem::remove_all(path / std::string("MelonLoader"));
         std::filesystem::remove_all(path / std::string("Mods"));
         std::filesystem::remove_all(path / std::string("Plugins"));
         std::filesystem::remove_all(path / std::string("UserData"));
+        std::filesystem::remove_all(path / std::string("UserLibs"));
         std::filesystem::remove(path / std::string("dobby.dll"));
         std::filesystem::remove(path / std::string("NOTICE.txt"));
         std::filesystem::remove(path / std::string("version.dll"));
