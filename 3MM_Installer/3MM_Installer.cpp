@@ -52,7 +52,14 @@ void RemoveBepInEx(std::filesystem::path path) {
 
 int main()
 {
+    HWND console = GetConsoleWindow();
+
     int input;
+
+    std::wstring version = L"1.0.0";
+    std::wstring title = L"3MM Installer v" + version;
+
+    SetWindowTextW(console, title.c_str());
 
     do {
 
