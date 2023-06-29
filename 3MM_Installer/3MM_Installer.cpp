@@ -56,7 +56,7 @@ int main()
 
     int input;
 
-    std::wstring version = L"1.0.0";
+    std::wstring version = L"1.0.1";
     std::wstring title = L"3MM Installer v" + version;
 
     SetWindowTextW(console, title.c_str());
