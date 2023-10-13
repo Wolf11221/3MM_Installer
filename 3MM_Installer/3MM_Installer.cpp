@@ -119,8 +119,8 @@ int main()
                 if (!std::filesystem::is_directory(BepInEx_path)) {
                     std::cout << "Downloading BepInEx\n";
 
-                    const char* url = "https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_x64_5.4.21.0.zip";
-                    const char* BepinexFile = "BepInEx_x64_5.4.21.0.zip";
+                    const char* url = "https://github.com/BepInEx/BepInEx/releases/download/v5.4.22/BepInEx_x64_5.4.22.0.zip";
+                    const char* BepinexFile = "BepInEx_x64_5.4.22.0.zip";
 
                     HRESULT result = URLDownloadToFileA(NULL, url, BepinexFile, 0, NULL);
                     if (result != S_OK) {
