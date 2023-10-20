@@ -54,7 +54,7 @@ int main()
 {
     HWND console = GetConsoleWindow();
 
-    std::wstring version = L"1.0.1";
+    std::wstring version = L"1.0.2";
     std::wstring title = L"3MM Installer v" + version;
 
     SetWindowTextW(console, title.c_str());
