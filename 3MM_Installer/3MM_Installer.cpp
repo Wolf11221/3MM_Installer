@@ -31,7 +31,7 @@ void RemoveMelonLoader(std::filesystem::path path) {
         std::filesystem::remove(path / std::string("NOTICE.txt"));
         std::filesystem::remove(path / std::string("version.dll"));
 
-        std::cout << "Removed MelonLoader\n";
+        std::cout << ", Done\n";
     }
     catch (const std::filesystem::filesystem_error& ex) {
         std::cerr << "Error removing MelonLoader: " << ex.what() << std::endl;
@@ -54,16 +54,13 @@ int main()
 {
     HWND console = GetConsoleWindow();
 
-    int input;
-
     std::wstring version = L"1.0.1";
     std::wstring title = L"3MM Installer v" + version;
 
     SetWindowTextW(console, title.c_str());
 
+    int input;
     do {
-
-        //std::cout << "Welcome to 3MM Installer\n";
         std::cout << "1) Install/Update 3DashModMenu\n";
         std::cout << "2) Uninstall 3DashModMenu and BepInEx\n\n";
 
@@ -76,7 +73,7 @@ int main()
             do
             {
                 BROWSEINFO bi = { 0 };
-                bi.lpszTitle = "Select a folder";
+                bi.lpszTitle = "Select 3Dash folder";
                 LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
 
                 if (pidl != NULL)
@@ -96,7 +93,7 @@ int main()
                 {
                     break;
                 }
-                MessageBox(NULL, "The directory does not contain 3Dash.exe", "File not found", MB_OK);
+                MessageBox(NULL, "This directory does not contain 3Dash.exe", "3Dash not found", MB_OK);
             } while (true);
 
             system("cls");
@@ -108,37 +105,42 @@ int main()
                 std::filesystem::path MelonLoader_path = std::filesystem::path(path) / std::string("MelonLoader");
                 std::filesystem::path BepInEx_plugins = BepInEx_path / std::string("plugins");
 
-                // Delete Melonlader
+                // Delete MelonLoader if found
                 if (std::filesystem::is_directory(MelonLoader_path)) {
-                    std::cout << "MelonLoader found, removing\n";
+                    std::cout << "Removing MelonLoader";
 
                     RemoveMelonLoader(std::filesystem::path(path));
                 }
 
                 // Install BepInEx
                 if (!std::filesystem::is_directory(BepInEx_path)) {
-                    std::cout << "Downloading BepInEx\n";
+                    std::cout << "Downloading BepInEx";
 
-                    const char* url = "https://github.com/BepInEx/BepInEx/releases/download/v5.4.22/BepInEx_x64_5.4.22.0.zip";
+                    const char* DownloadUrl = "https://github.com/BepInEx/BepInEx/releases/download/v5.4.22/BepInEx_x64_5.4.22.0.zip";
                     const char* BepinexFile = "BepInEx_x64_5.4.22.0.zip";
 
-                    HRESULT result = URLDownloadToFileA(NULL, url, BepinexFile, 0, NULL);
+                    HRESULT result = URLDownloadToFileA(NULL, DownloadUrl, BepinexFile, 0, NULL);
                     if (result != S_OK) {
                         std::cout << "Error downloading BepInEx!\n";
                     }
+                    std::cout << ", Done\n";
 
-                    std::cout << "Extracting BepInEx\n";
+                    std::cout << "Extracting BepInEx";
 
                     elz::extractZip(BepinexFile, path, "");
                     std::remove(BepinexFile);
 
-                    std::cout << "Creating plugins directory\n";
+                    std::cout << ", Done\n";
+
+                    std::cout << "Creating plugins directory";
                     std::filesystem::create_directory(BepInEx_plugins);
+
+                    std::cout << ", Done\n";
                 }
 
                 // Install 3DashModMenu
                 if (std::filesystem::is_directory(BepInEx_plugins)) {
-                    std::cout << "Downloading 3DashModMenu\n";
+                    std::cout << "Downloading 3DashModMenu";
 
                     const char* url = "https://github.com/Wolf11221/3DashModMenu/releases/latest/download/3DashModMenu.dll";
                     const char* name = "3DashModMenu.dll";
@@ -149,8 +151,10 @@ int main()
                     if (result != S_OK) {
                         std::cout << "Error downloading 3MM!\n";
                     }
+
+                    std::cout << ", Done!\n\n";
                 }
-                std::cout << "Done!\n\n";
+                //std::cout << "Done!\n\n";
             }
         }
         else if (input == 2) {
@@ -158,7 +162,7 @@ int main()
             do
             {
                 BROWSEINFO bi = { 0 };
-                bi.lpszTitle = "Select a folder";
+                bi.lpszTitle = "Select 3Dash folder";
                 LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
 
                 if (pidl != NULL)
@@ -177,16 +181,16 @@ int main()
                 {
                     break;
                 }
-                MessageBox(NULL, "The directory does not contain 3Dash.exe", "File not found", MB_OK);
+                MessageBox(NULL, "The directory does not contain 3Dash.exe", "3Dash not found", MB_OK);
             } while (true);
 
             system("cls");
 
-            std::cout << "Removing files\n";
+            std::cout << "Removing files";
 
             RemoveBepInEx(path);
 
-            std::cout << "Done!\n\n";
+            std::cout << ", Done!\n\n";
         }
     } while (input != 0);
 
